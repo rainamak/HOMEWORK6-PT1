@@ -1,0 +1,152 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+
+</head>
+
+<body> 
+    <h1> Welcome to Lucky for Life!</h1>
+    <script type="text/javascript"> 
+    
+    // declaring arrays// 
+    random = new Array(5); 
+    lucky = new Array(1);
+        
+
+    //generating a number between specific ranges// 
+    function getNumbers(min, max) { 
+        min = Math.ceil(min); 
+        max = Math.floor(max); 
+        return (Math.floor(Math.random() * (max - min + 1)) + min); 
+    }
+    
+    
+   
+    //populates array with unique values//  
+    var i=0; 
+    while(i<5){
+        var num; 
+        var num = getNumbers(1,48); 
+        if(!random.includes(num)){
+            random.push(num); 
+            i++; 
+        }
+             
+    }
+    
+    //filters out any undefined values in array// 
+    var random = random.filter(function(x){
+        return x!== undefined; 
+    })
+    
+
+    //gets lucky ball numbers// 
+    lucky[0] = getNumbers(1,18);
+    
+    
+    //displaying contents of an array with a loop// 
+    document.write("Today's picks: ")
+    for (i=0; i<random.length; i++){
+        document.write(random[i] + " "); 
+    }
+    
+    document.write("<br>"+"Today's lucky ball: ")
+    document.write(lucky[0]+"<br>")
+    
+    //sort array and display again// 
+    random.sort(function(a,b){return a-b}); 
+    
+    document.write("<br>"+"Today's picks, sorted: ")
+    for (i=0; i<random.length; i++){
+        document.write(random[i] + " "); 
+    }
+    
+    document.write("<br>"+"Today's lucky ball: ")
+    document.write(lucky[0])
+        
+        
+    </script>
+    
+    <!-- creating the form--> 
+    <form id="userInput"> 
+        Enter 5 Numbers: <input type="text" id="numbers"> <br> 
+        Enter a Lucky Ball Number: <input type="text" id="luckyball"> 
+        
+    </form>
+    
+    <button type ="button" onclick="parseEntries()">CHECK YOUR LUCK</button>    
+    
+    <script type="text/javascript"> 
+    
+    function parseEntries(){
+        var entry = document.getElementById("numbers").value;
+        var parsedEntry = entry.split(" "); 
+        
+        //checking how many matches// 
+        var count = 0; 
+        
+        for(i=0; i<parsedEntry.length; i++){
+            for(j=0; j<random.length; j++){ 
+                if (parsedEntry[i] == random[j])
+                count++; 
+            }
+        }
+        
+        //checking for lucky ball match// 
+        var isLucky = false; 
+        var luckyGuess = document.getElementById("luckyball").value;
+        if(lucky[0]==luckyGuess){
+            isLucky = true; 
+        }  
+        
+        //checking the prize// 
+        var prize = "nothing"; 
+        if(count==0 && isLucky==true){
+            prize = "$4"; 
+        }
+        
+        if(count==1 && isLucky==true){
+            prize = "$6"; 
+        }
+        
+        if(count==2 && isLucky==false){
+            prize = "$3"; 
+        }
+        
+        if(count==2 && isLucky==true){
+            prize = "$25"; 
+        }
+        
+        if(count==3 && isLucky==false){
+            prize = "$20"; 
+        }
+        
+        if(count==3 && isLucky==true){
+            prize = "$150"; 
+        }
+        
+        if(count==4 && isLucky==false){
+            prize = "$200"; 
+        }
+        
+        if(count==4 && isLucky==true){
+            prize = "$5000"; 
+        }
+        
+        if(count==5 && isLucky==false){
+            prize = "$2500 a YEAR for LIFE!"; 
+        }
+        
+        if(count==5 && isLucky==true){
+            prize = "$7000 a WEEK for LIFE!"; 
+        }
+        
+        document.write("YOU WIN... " + prize); 
+        
+    }    
+    </script>
+    
+    
+</body>
+
+</html>
